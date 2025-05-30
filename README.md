@@ -3,7 +3,7 @@ This is the implementation of our Diffusion based Generative Counterfactual Augm
 
 ## Preliminary Results
 <img width="804" alt="stable_diffusion_FT" src="https://github.com/user-attachments/assets/1d008925-6e87-4cef-8cb9-3e95ac3bda62" />
-**Figure:** (a) SD-v1.5 w/o fine-tuning, (b-c) SD-v1.5 fine-tuned on RSNA dataset 
+**Figure** : (a) SD-v1.5 w/o fine-tuning, (b-c) SD-v1.5 fine-tuned on RSNA dataset 
 
 ## Fine-Tune SD-v1.5 with DreamBooth
 ```python
