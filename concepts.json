@@ -1,0 +1,30 @@
+[
+    {
+        "instance_prompt": "image of a male chest x-ray",
+        "instance_data_dir": "../CXR/datasets/cxr_dreambooth/male"
+    },
+    {
+        "instance_prompt": "image of a female chest x-ray",
+        "instance_data_dir": "../CXR/datasets/cxr_dreambooth/female"
+    },
+    {
+        "instance_prompt": "image of a 0-20Y chest x-ray",
+        "instance_data_dir": "../CXR/datasets/cxr_dreambooth/0-20Y"
+    },
+    {
+        "instance_prompt": "image of 20-40Y chest x-ray",
+        "instance_data_dir": "../CXR/datasets/cxr_dreambooth/20-40Y"
+    },
+    {
+        "instance_prompt": "image of a 40-60Y chest x-ray",
+        "instance_data_dir": "../CXR/datasets/cxr_dreambooth/40-60Y"
+    },
+    {
+        "instance_prompt": "image of a 60-80Y chest x-ray",
+        "instance_data_dir": "../CXR/datasets/cxr_dreambooth/60-80Y"
+    },
+    {
+        "instance_prompt": "image of a 80+Y chest x-ray",
+        "instance_data_dir": "../CXR/datasets/cxr_dreambooth/80+Y"
+    }
+]
