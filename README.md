@@ -18,6 +18,11 @@ python train_dreambooth.py --pretrained_model_name_or_path="sd-legacy/stable-dif
 python train_dreambooth_shivam.py --pretrained_model_name_or_path="sd-legacy/stable-diffusion-v1-5"  --resolution=512 --train_batch_size=1 --gradient_accumulation_steps=1 --learning_rate=5e-6 --lr_scheduler="constant" --lr_warmup_steps=0 --max_train_steps=4000 --concepts_list="concepts.json" --output_dir="saved_models/n_concepts_db/"
 ```
 
+## Fine-Tune SD-v1.5 with Textual Inversion
+```python
+python textual_inversion.py --pretrained_model_name_or_path="sd-legacy/stable-diffusion-v1-5" --train_data_dir="../CXR/datasets/rsna/" --learnable_property="object" --placeholder_token="<chest x-ray>" --initializer_token="x-ray" --resolution=512 --train_batch_size=1 --gradient_accumulation_steps=4 --max_train_steps=3000 --learning_rate=5.0e-04 --scale_lr --lr_scheduler="constant" --lr_warmup_steps=0 --output_dir="saved_models/textual_inversion_cxr" --push_to_hub
+```
+
 ## Troubleshooting
 ```python
 # If issues with 'cached_downloads' library
