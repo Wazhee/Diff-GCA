@@ -37,7 +37,7 @@ import transformers
 from accelerate import Accelerator
 from accelerate.logging import get_logger
 from accelerate.utils import ProjectConfiguration, set_seed
-from datasets import load_dataset
+from datasets import load_dataset, load_from_disk
 from huggingface_hub import create_repo, upload_folder
 from packaging import version
 from torchvision import transforms
@@ -161,7 +161,7 @@ def parse_args():
     parser.add_argument(
         "--original_image_column",
         type=str,
-        default="input_image",
+        default="original_image",
         help="The column of the dataset containing the original image on which edits where made.",
     )
     parser.add_argument(
@@ -623,26 +623,23 @@ def main():
     # download the dataset.
     if args.dataset_name is not None:
         # Downloading and loading a dataset from the hub.
-        dataset = load_dataset(
-            args.dataset_name,
-            args.dataset_config_name,
-            cache_dir=args.cache_dir,
+        dataset = load_from_disk(
+            args.dataset_name
         )
     else:
         data_files = {}
         if args.train_data_dir is not None:
             data_files["train"] = os.path.join(args.train_data_dir, "**")
-        dataset = load_dataset(
+        dataset = load_from_disk(
             "imagefolder",
-            data_files=data_files,
-            cache_dir=args.cache_dir,
+            data_files=data_files
         )
         # See more about loading custom images at
         # https://huggingface.co/docs/datasets/main/en/image_load#imagefolder
 
     # Preprocessing the datasets.
     # We need to tokenize inputs and targets.
-    column_names = dataset["train"].column_names
+    column_names = dataset.column_names
 
     # 6. Get the column names for input/target.
     dataset_columns = DATASET_NAME_MAPPING.get(args.dataset_name, None)
@@ -722,9 +719,9 @@ def main():
 
     with accelerator.main_process_first():
         if args.max_train_samples is not None:
-            dataset["train"] = dataset["train"].shuffle(seed=args.seed).select(range(args.max_train_samples))
+            dataset = dataset.shuffle(seed=args.seed).select(range(args.max_train_samples))
         # Set the training transforms
-        train_dataset = dataset["train"].with_transform(preprocess_train)
+        train_dataset = dataset.with_transform(preprocess_train)
 
     def collate_fn(examples):
         original_pixel_values = torch.stack([example["original_pixel_values"] for example in examples])
