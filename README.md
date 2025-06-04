@@ -6,6 +6,21 @@ This is the implementation of our Diffusion based Generative Counterfactual Augm
 
 **Figure** : (a) SD-v1.5 w/o fine-tuning, (b-c) SD-v1.5 fine-tuned on RSNA dataset 
 
+## Troubleshooting
+```python
+# If issues with 'cached_downloads' library
+https://github.com/easydiffusion/easydiffusion/issues/1851
+```
+
+## Install Required Libraries
+```python
+#Python3.10
+pip install diffusers==0.25.0
+pip install transformers==4.39.3
+pip install accelerate
+pip install datasets
+```
+
 ## Fine-Tune SD-v1.5 with DreamBooth
 
 #### One Concept
@@ -28,38 +43,9 @@ python textual_inversion.py --pretrained_model_name_or_path="sd-legacy/stable-di
 python train_custom_diffusion.py --pretrained_model_name_or_path="sd-legacy/stable-diffusion-v1-5" --instance_data_dir="../CXR/datasets/rsna/" --output_dir="saved_models/custom_diffusion_cxr" --class_data_dir="../CXR/datasets/rsna/" --real_prior --prior_loss_weight=1.0 --class_prompt="rsna x-ray" --num_class_images=30000 --instance_prompt="photo of a <rsna> x-ray" --resolution=512 --train_batch_size=2 --learning_rate=1e-5 --lr_warmup_steps=0 --max_train_steps=4000 --scale_lr --hflip --modifier_token "<rsna>" --validation_prompt="<rsna> x-ray" --no_safe_serialization
 ```
 
+## Fine-Tune SD-v1.5 with InstructPix2Pix
 ```python
-python train_custom_diffusion.py \
-  --pretrained_model_name_or_path="sd-legacy/stable-diffusion-v1-5"  \
-  --output_dir="saved_models/custom_diffusion_cxr"  \
-  --concepts_list="concept_list.json" \
-  --with_prior_preservation \
-  --real_prior \
-  --prior_loss_weight=1.0 \
-  --resolution=512  \
-  --train_batch_size=2  \
-  --learning_rate=1e-5  \
-  --lr_warmup_steps=0 \
-  --max_train_steps=500 \
-  --num_class_images=200 \
-  --scale_lr \
-  --hflip  \
-  --modifier_token "<new1>+<new2>" \
-
-```
-
-## Troubleshooting
-```python
-# If issues with 'cached_downloads' library
-https://github.com/easydiffusion/easydiffusion/issues/1851
-```
-
-## Install Required Libraries
-```python
-#Python3.10
-pip install diffusers==0.25.0
-pip install transformers==4.39.3
-pip install accelerate
+python train_instruct_pix2pix.py --pretrained_model_name_or_path="sd-legacy/stable-diffusion-v1-5" --dataset_name="../CXR/datasets/cxr_instruct_dataset" --resolution=256 --random_flip --train_batch_size=4 --gradient_accumulation_steps=4 --gradient_checkpointing --max_train_steps=15000 --checkpointing_steps=5000 --checkpoints_total_limit=1 --learning_rate=5e-05 --max_grad_norm=1 --lr_warmup_steps=0 --conditioning_dropout_prob=0.05 --mixed_precision=fp16 --seed=42 --output_dir="saved_models/instruct-pix2pix-model"
 ```
 
 ## Cite this work
