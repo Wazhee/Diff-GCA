@@ -10,6 +10,9 @@ This is the implementation of our Diffusion based Generative Counterfactual Augm
 ```python
 # If issues with 'cached_downloads' library
 https://github.com/easydiffusion/easydiffusion/issues/1851
+    
+# Can't import DIFFUSERS_REQUEST_TIMEOUT ?
+add 'DIFFUSERS_REQUEST_TIMEOUT = 60' to diffusers/utils/constants.py
 ```
 
 ## Install Required Libraries
