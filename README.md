@@ -22,6 +22,7 @@ pip install diffusers==0.25.0
 pip install transformers==4.39.3
 pip install accelerate
 pip install datasets
+pip install --upgrade Pillow
 ```
 
 ## Fine-Tune SD-v1.5 with DreamBooth
@@ -48,7 +49,11 @@ python train_custom_diffusion.py --pretrained_model_name_or_path="sd-legacy/stab
 
 ## Fine-Tune SD-v1.5 with InstructPix2Pix
 ```python
-python train_instruct_pix2pix.py --pretrained_model_name_or_path="sd-legacy/stable-diffusion-v1-5" --dataset_name="../CXR/datasets/cxr_instruct_dataset" --resolution=256 --random_flip --train_batch_size=4 --gradient_accumulation_steps=4 --gradient_checkpointing --max_train_steps=15000 --checkpointing_steps=5000 --checkpoints_total_limit=1 --learning_rate=5e-05 --max_grad_norm=1 --lr_warmup_steps=0 --conditioning_dropout_prob=0.05 --mixed_precision=fp16 --seed=42 --output_dir="saved_models/instruct-pix2pix-model"
+python train_instruct_pix2pix.py --pretrained_model_name_or_path="sd-legacy/stable-diffusion-v1-5" --dataset_name="../CXR/datasets/cxr_instruct_HFdataset" --resolution=256 --random_flip --train_batch_size=4 --gradient_accumulation_steps=4 --gradient_checkpointing --max_train_steps=15000 --checkpointing_steps=1000 --checkpoints_total_limit=2 --learning_rate=5e-05 --max_grad_norm=1 --lr_warmup_steps=0 --conditioning_dropout_prob=0.05 --mixed_precision=fp16 --seed=42 --output_dir="saved_models/instruct-pix2pix-model" --dataloader_num_workers 8
+```
+```python
+# to resume from last checkpoint
+--resume_from_checkpoint ""
 ```
 
 ## Cite this work
